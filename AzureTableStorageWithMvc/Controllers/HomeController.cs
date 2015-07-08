@@ -46,6 +46,25 @@ namespace AzureTableStorageWithMvc.Controllers
             return View(kittehs);
         }
 
+        [HttpPost]
+        public ActionResult Index(KittehEntity entity)
+        {
+            var storageAccount = CloudStorageAccount.Parse(CloudConfigurationManager.GetSetting("StorageConnectionString"));
+
+            var client = storageAccount.CreateCloudTableClient();
+            var kittehTable = client.GetTableReference("PicturesOfKittehs");
+
+            var insert = TableOperation.Insert(entity);
+            kittehTable.Execute(insert);
+
+            var kittehQuery = new TableQuery<KittehEntity>()
+                .Where(TableQuery.GenerateFilterCondition("PartitionKey", QueryComparisons.Equal, "FunnyKittehs"));
+
+            var kittehs = kittehTable.ExecuteQuery(kittehQuery).ToList();
+
+            return View(kittehs);
+        }
+
         public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";

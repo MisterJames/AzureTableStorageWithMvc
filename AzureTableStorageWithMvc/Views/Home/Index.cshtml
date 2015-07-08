@@ -10,3 +10,24 @@
         <img src="@kitteh.ImageUrl" />
     </div>
 }
+
+<h2>Like Kittehs? Add a Kitteh!</h2>
+@using (Html.BeginForm("Index", "Home", FormMethod.Post))
+{
+    <div class="form-group">
+        <label for="ImageUrl">What kind of Kitteh is it?</label>
+        <select class="form-control" name="PartitionKey">
+            <option value="FunnyKittehs">Funny Kitteh</option>
+            <option value="CuteKittehs">Cute Kitteh</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="RowKey">Kitteh Name</label>
+        <input type="text" class="form-control" id="RowKey" name="RowKey" placeholder="SeriousKitteh">
+    </div>
+    <div class="form-group">
+        <label for="ImageUrl">Image URL</label>
+        <input type="url" class="form-control" id="ImageUrl" name="ImageUrl" placeholder="http://awesomekittehs.org/pic1.jpg">
+    </div>
+    <button type="submit" class="btn btn-default">Submit</button>
+}
